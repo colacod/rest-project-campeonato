@@ -1,13 +1,17 @@
 package br.com.project.service;
 
+import java.util.List;
+
+import br.com.project.resource.Campeonato;
+
 public interface CampeonatoService {
 
-	void criarGrupoCampeonato(Integer idCampeonato);
+	Campeonato getCampeonato(Integer id);
 
-	void criarPlayoffCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo);
+	Campeonato saveCampeonato(Campeonato campeonato);
 
-	void criarPlayoffSemisCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo);
+	Campeonato addTotalCampeonato(Integer idCampeonato);
 
-	void criarPlayoffFinalCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo);
+	List<Campeonato> getCampeonatos();
 
 }

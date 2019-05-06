@@ -1,4 +1,4 @@
-package br.com.project.component;
+package br.com.project.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +9,16 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.project.entity.TimeEntity;
 import br.com.project.repository.TimeRepository;
 import br.com.project.resource.Time;
+import br.com.project.service.TimeService;
 
-@Component
+@Service
 @Transactional
-public class TimeComponentImpl implements TimeComponent {
+public class TimeServiceImpl implements TimeService {
 
 	@Autowired
 	private TimeRepository repository;

@@ -1,10 +1,10 @@
-package br.com.project.component;
+package br.com.project.service;
 
 import java.util.List;
 
 import br.com.project.resource.GrupoVinculo;
 
-public interface GrupoVinculoComponent {
+public interface GrupoVinculoService {
 
 	List<GrupoVinculo> getGrupo(Integer idGrupo);
 

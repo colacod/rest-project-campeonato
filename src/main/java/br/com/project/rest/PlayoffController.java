@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.project.component.PlayoffComponent;
 import br.com.project.resource.Playoff;
+import br.com.project.service.PlayoffService;
 
 @RestController
 @RequestMapping("/playoff")
 public class PlayoffController {
 
 	@Autowired
-	private PlayoffComponent playoffComponent;
+	private PlayoffService playoffService;
 
 	@RequestMapping(path = "/get/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Playoff>> getPlayoff(@PathVariable(value = "idCampeonato") Integer idCampeonato) {
-		List<Playoff> playoffs = playoffComponent.getPlayoff(idCampeonato);
+		List<Playoff> playoffs = playoffService.getPlayoff(idCampeonato);
 		if (playoffs.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}

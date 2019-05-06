@@ -1,8 +1,8 @@
-package br.com.project.component;
+package br.com.project.service;
 
 import br.com.project.resource.Time;
 
-public interface JwtComponent {
+public interface JwtService {
 
 	String getToken(Time user);
 

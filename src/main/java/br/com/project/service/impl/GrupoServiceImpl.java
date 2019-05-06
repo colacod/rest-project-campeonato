@@ -1,4 +1,4 @@
-package br.com.project.component;
+package br.com.project.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +9,16 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.project.entity.GrupoEntity;
 import br.com.project.repository.GrupoRepository;
 import br.com.project.resource.Grupo;
+import br.com.project.service.GrupoService;
 
-@Component
+@Service
 @Transactional
-public class GrupoComponentImpl implements GrupoComponent {
+public class GrupoServiceImpl implements GrupoService {
 
 	@Autowired
 	private GrupoRepository repository;

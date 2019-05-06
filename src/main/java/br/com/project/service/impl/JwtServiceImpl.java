@@ -1,4 +1,4 @@
-package br.com.project.component;
+package br.com.project.service.impl;
 
 import java.util.Base64;
 import java.util.Date;
@@ -8,12 +8,13 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.project.resource.Time;
+import br.com.project.service.JwtService;
 
-@Component
-public class JwtComponentImpl implements JwtComponent {
+@Service
+public class JwtServiceImpl implements JwtService {
 
 	@Value("${jwt.expire.hours}")
 	private String expireHours;

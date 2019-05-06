@@ -15,24 +15,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.project.component.GrupoComponent;
-import br.com.project.component.GrupoVinculoComponent;
 import br.com.project.resource.Grupo;
 import br.com.project.resource.GrupoVinculo;
+import br.com.project.service.GrupoService;
+import br.com.project.service.GrupoVinculoService;
 
 @RestController
 @RequestMapping("/grupo")
 public class GrupoController {
 
 	@Autowired
-	private GrupoComponent grupoComponent;
+	private GrupoService grupoService;
 
 	@Autowired
-	private GrupoVinculoComponent grupoVinculoComponent;
+	private GrupoVinculoService grupoVinculoService;
 
 	@RequestMapping(path = "/get/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Grupo> getGrupo(@PathVariable(value = "id") Integer id) {
-		Grupo grupo = grupoComponent.getGrupo(id);
+		Grupo grupo = grupoService.getGrupo(id);
 		if (Objects.isNull(grupo)) {
 			return ResponseEntity.notFound().build();
 		}
@@ -41,7 +41,7 @@ public class GrupoController {
 
 	@RequestMapping(path = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Grupo>> getGrupos() {
-		List<Grupo> grupos = grupoComponent.getGrupos();
+		List<Grupo> grupos = grupoService.getGrupos();
 		if (grupos.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -50,7 +50,7 @@ public class GrupoController {
 
 	@RequestMapping(path = "/vinculo/get/{idGrupo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<GrupoVinculo>> getGruposVinculado(@PathVariable(value = "idGrupo") Integer idGrupo) {
-		List<GrupoVinculo> grupos = grupoVinculoComponent.getGrupo(idGrupo);
+		List<GrupoVinculo> grupos = grupoVinculoService.getGrupo(idGrupo);
 		if (grupos.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -59,7 +59,7 @@ public class GrupoController {
 
 	@RequestMapping(path = "/vinculo/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<GrupoVinculo>> getTodosGruposVinculado() {
-		List<GrupoVinculo> grupos = grupoVinculoComponent.getGrupos();
+		List<GrupoVinculo> grupos = grupoVinculoService.getGrupos();
 		if (grupos.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -68,7 +68,7 @@ public class GrupoController {
 
 	@RequestMapping(path = "/set", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Grupo> setGrupo(@Valid @RequestBody Grupo grupo) {
-		Grupo resultGrupo = grupoComponent.setGrupo(grupo);
+		Grupo resultGrupo = grupoService.setGrupo(grupo);
 		if (Objects.isNull(resultGrupo)) {
 			return ResponseEntity.badRequest().build();
 		}

@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.project.component.ResultadoComponent;
 import br.com.project.resource.Resultado;
+import br.com.project.service.ResultadoService;
 
 @RestController
 @RequestMapping("/resultado")
 public class ResultadoController {
 
 	@Autowired
-	private ResultadoComponent resultadoComponent;
+	private ResultadoService resultadoService;
 
 	@RequestMapping(path = "/get/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Resultado>> getResultados(@PathVariable(value = "idCampeonato") Integer idCampeonato) {
-		List<Resultado> resultados = resultadoComponent.getResultado(idCampeonato);
+		List<Resultado> resultados = resultadoService.getResultado(idCampeonato);
 		if (resultados.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -36,7 +36,7 @@ public class ResultadoController {
 
 	@RequestMapping(path = "/set", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Resultado> setResultados(@Valid @RequestBody Resultado resultado) {
-		Resultado result = resultadoComponent.setResultado(resultado);
+		Resultado result = resultadoService.setResultado(resultado);
 		if (Objects.isNull(result)) {
 			return ResponseEntity.badRequest().build();
 		}

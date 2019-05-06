@@ -1,10 +1,10 @@
-package br.com.project.component;
+package br.com.project.service;
 
 import java.util.List;
 
 import br.com.project.resource.Grupo;
 
-public interface GrupoComponent {
+public interface GrupoService {
 
 	Grupo getGrupo(Integer id);
 

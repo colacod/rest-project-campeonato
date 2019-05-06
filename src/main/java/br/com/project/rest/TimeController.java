@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.project.component.TimeComponent;
 import br.com.project.resource.Time;
+import br.com.project.service.TimeService;
 
 @RestController
 @RequestMapping("/time")
 public class TimeController {
 
 	@Autowired
-	private TimeComponent timeComponent;
+	private TimeService timeService;
 
 	@RequestMapping(path = "/get/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Time> getTime(@PathVariable(value = "id") Integer id) {
-		Time time = timeComponent.getTime(id);
+		Time time = timeService.getTime(id);
 		if (Objects.isNull(time)) {
 			return ResponseEntity.notFound().build();
 		}
@@ -35,7 +35,7 @@ public class TimeController {
 
 	@RequestMapping(path = "/set", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Time> setTime(@Valid @RequestBody Time time) {
-		Time resultTime = timeComponent.saveTime(time);
+		Time resultTime = timeService.saveTime(time);
 		if (Objects.isNull(resultTime)) {
 			return ResponseEntity.badRequest().build();
 		}

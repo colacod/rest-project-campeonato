@@ -1,4 +1,4 @@
-package br.com.project.component;
+package br.com.project.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +9,16 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.project.entity.ResultadoEntity;
 import br.com.project.repository.ResultadoRepository;
 import br.com.project.resource.Resultado;
+import br.com.project.service.ResultadoService;
 
-@Component
+@Service
 @Transactional
-public class ResultadoComponentImpl implements ResultadoComponent {
+public class ResultadoServiceImpl implements ResultadoService {
 
 	@Autowired
 	private ResultadoRepository repository;

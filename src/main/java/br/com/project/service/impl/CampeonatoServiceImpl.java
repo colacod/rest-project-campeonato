@@ -1,4 +1,4 @@
-package br.com.project.component;
+package br.com.project.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,16 +10,17 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.project.ApplicationConstantes;
 import br.com.project.entity.CampeonatoEntity;
 import br.com.project.repository.CampeonatoRepository;
 import br.com.project.resource.Campeonato;
+import br.com.project.service.CampeonatoService;
 
-@Component
+@Service
 @Transactional
-public class CampeonatoComponentImpl implements CampeonatoComponent {
+public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Autowired
 	private CampeonatoRepository repository;

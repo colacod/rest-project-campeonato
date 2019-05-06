@@ -1,4 +1,4 @@
-package br.com.project.service;
+package br.com.project.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,37 +11,38 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.project.component.CampeonatoComponent;
-import br.com.project.component.GrupoComponent;
-import br.com.project.component.GrupoVinculoComponent;
-import br.com.project.component.PlayoffComponent;
-import br.com.project.component.ResultadoComponent;
-import br.com.project.component.TimeComponent;
 import br.com.project.resource.Grupo;
 import br.com.project.resource.Playoff;
 import br.com.project.resource.Resultado;
 import br.com.project.resource.Time;
+import br.com.project.service.CampeonatoService;
+import br.com.project.service.CampeonatoModuleService;
+import br.com.project.service.GrupoService;
+import br.com.project.service.GrupoVinculoService;
+import br.com.project.service.PlayoffService;
+import br.com.project.service.ResultadoService;
+import br.com.project.service.TimeService;
 
 @Service
-public class CampeonatoServiceImpl implements CampeonatoService {
+public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 
 	@Autowired
-	private ResultadoComponent resultadoComponent;
+	private ResultadoService resultadoComponent;
 
 	@Autowired
-	private TimeComponent timeComponent;
+	private TimeService timeComponent;
 
 	@Autowired
-	private GrupoComponent grupoComponent;
+	private GrupoService grupoComponent;
 
 	@Autowired
-	private GrupoVinculoComponent grupoVinculoComponent;
+	private GrupoVinculoService grupoVinculoComponent;
 
 	@Autowired
-	private CampeonatoComponent campeonatoComponent;
+	private CampeonatoService campeonatoComponent;
 
 	@Autowired
-	private PlayoffComponent playoffComponent;
+	private PlayoffService playoffComponent;
 
 	@Override
 	public void criarGrupoCampeonato(Integer idCampeonato) {

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import br.com.project.enums.JwtRequestAttribute;
 import br.com.project.resource.Time;
+import br.com.project.service.JwtService;
 import io.jsonwebtoken.JwtException;
 
 @Component
@@ -26,7 +27,7 @@ public class JwtFilterComponent implements Filter {
 	private static final Integer BEARER_LENGTH = "Bearer".length();
 
 	@Autowired
-	private JwtComponent jwtTokenService;
+	private JwtService jwtTokenService;
 
 	@Value("${jwt.auth.header}")
 	private String authHeader;
