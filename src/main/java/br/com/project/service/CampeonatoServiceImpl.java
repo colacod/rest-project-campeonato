@@ -67,15 +67,40 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 	}
 
 	@Override
-	public void criarPlayoffCampeonato(Integer idCampeonato, Integer idGrupo, Integer limiteDeTimes) {
+	public void criarPlayoffCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo) {
+		criarPlayoffCampeonato(grupoComponent.buscarTodosGrupos(), idCampeonato, idProximoGrupo, limiteTimePorGrupo);
+	}
 
-		List<Grupo> grupos = grupoComponent.buscarTodosGrupos();
+	@Override
+	public void criarPlayoffSemisCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo) {
+		criarPlayoffCampeonato(grupoComponent.buscarTodosGruposQuartas(), idCampeonato, idProximoGrupo,
+				limiteTimePorGrupo);
+	}
+
+	@Override
+	public void criarPlayoffFinalCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo) {
+		criarPlayoffCampeonato(grupoComponent.buscarTodosGruposSemis(), idCampeonato, idProximoGrupo,
+				limiteTimePorGrupo);
+	}
+
+	/**
+	 * Metodo responsavel por criar as playoff de acordo com o seu grupo e id do
+	 * proximo grupo
+	 * 
+	 * @param grupos, lista do grupo atual
+	 * @param idCampeonato, id do campeonato atual
+	 * @param idProximoGrupo, id do proximo grupo das playoff
+	 * @param limiteTimePorGrupo, limite de times que sera adicionado na playoff
+	 */
+	private void criarPlayoffCampeonato(List<Grupo> grupos, Integer idCampeonato, Integer idProximoGrupo,
+			Integer limiteTimePorGrupo) {
+
 		List<Time> times = new ArrayList<>();
 
 		for (Grupo grupo : grupos) {
 			List<Resultado> resultadosPorGrupo = resultadoComponent.getResultadoPorGrupo(grupo.getIdGrupo());
 			Map<Integer, Integer> pontosPorGrupo = somarPontosGrupos(resultadosPorGrupo);
-			times.addAll(pegarTimesComMaisPontos(pontosPorGrupo, limiteDeTimes));
+			times.addAll(pegarTimesComMaisPontos(pontosPorGrupo, limiteTimePorGrupo));
 		}
 
 		Collections.shuffle(times);
@@ -88,7 +113,7 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 		for (int i = 0; i < timesUm.size(); i++) {
 			Playoff playoff = new Playoff();
 			playoff.setIdCampeonatoPlayoff(idCampeonato);
-			playoff.setIdGrupo(idGrupo);
+			playoff.setIdGrupo(idProximoGrupo);
 			playoff.setIdTimeUm(timesUm.get(i).getIdTime());
 			playoff.setIdTimeDois(timesDois.get(i).getIdTime());
 			playoffComponent.setPlayoff(playoff);

@@ -64,8 +64,25 @@ public class CampeonatoController {
 
 	@RequestMapping(path = "/criar/playoff/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> criarCampeonatoPlayoff(@PathVariable(value = "idCampeonato") Integer idCampeonato,
-			@PathVariable(value = "idGrupo") Integer idGrupo, @PathVariable(value = "limite") Integer limite) {
-		campeonatoService.criarPlayoffCampeonato(idCampeonato, idGrupo, limite);
+			@PathVariable(value = "idGrupo") Integer idProximoGrupo,
+			@PathVariable(value = "limite") Integer limiteTimePorGrupo) {
+		campeonatoService.criarPlayoffCampeonato(idCampeonato, idProximoGrupo, limiteTimePorGrupo);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
+	@RequestMapping(path = "/criar/semis/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> criarCampeonatoSemis(@PathVariable(value = "idCampeonato") Integer idCampeonato,
+			@PathVariable(value = "idGrupo") Integer idProximoGrupo,
+			@PathVariable(value = "limite") Integer limiteTimePorGrupo) {
+		campeonatoService.criarPlayoffSemisCampeonato(idCampeonato, idProximoGrupo, limiteTimePorGrupo);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
+	@RequestMapping(path = "/criar/final/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Boolean> criarCampeonatoFinal(@PathVariable(value = "idCampeonato") Integer idCampeonato,
+			@PathVariable(value = "idGrupo") Integer idProximoGrupo,
+			@PathVariable(value = "limite") Integer limiteTimePorGrupo) {
+		campeonatoService.criarPlayoffFinalCampeonato(idCampeonato, idProximoGrupo, limiteTimePorGrupo);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }
