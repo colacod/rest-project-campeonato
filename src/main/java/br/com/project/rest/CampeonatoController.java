@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.project.resource.Campeonato;
-import br.com.project.service.CampeonatoService;
 import br.com.project.service.CampeonatoModuleService;
+import br.com.project.service.CampeonatoService;
 
 @RestController
 @RequestMapping("/campeonato")
@@ -62,7 +62,7 @@ public class CampeonatoController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@RequestMapping(path = "/criar/playoff/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/criar/playoff/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> criarCampeonatoPlayoff(@PathVariable(value = "idCampeonato") Integer idCampeonato,
 			@PathVariable(value = "idGrupo") Integer idProximoGrupo,
 			@PathVariable(value = "limite") Integer limiteTimePorGrupo) {
@@ -70,7 +70,7 @@ public class CampeonatoController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@RequestMapping(path = "/criar/semis/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/criar/semis/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> criarCampeonatoSemis(@PathVariable(value = "idCampeonato") Integer idCampeonato,
 			@PathVariable(value = "idGrupo") Integer idProximoGrupo,
 			@PathVariable(value = "limite") Integer limiteTimePorGrupo) {
@@ -78,7 +78,7 @@ public class CampeonatoController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@RequestMapping(path = "/criar/final/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/criar/final/campeonato/{idCampeonato}/grupo/{idGrupo}/limite/{limite}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> criarCampeonatoFinal(@PathVariable(value = "idCampeonato") Integer idCampeonato,
 			@PathVariable(value = "idGrupo") Integer idProximoGrupo,
 			@PathVariable(value = "limite") Integer limiteTimePorGrupo) {
