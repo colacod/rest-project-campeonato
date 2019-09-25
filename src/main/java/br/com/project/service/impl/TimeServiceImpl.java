@@ -1,6 +1,7 @@
 package br.com.project.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,7 +42,8 @@ public class TimeServiceImpl implements TimeService {
 		if (timesEntity.isEmpty()) {
 			return new ArrayList<>();
 		}
-		return timesEntity.stream().map(source -> modelMapper.map(source, Time.class)).collect(Collectors.toList());
+		return timesEntity.stream().map(source -> modelMapper.map(source, Time.class))
+				.sorted(Comparator.comparingInt(Time::getIdTime)).collect(Collectors.toList());
 	}
 
 	@Override
