@@ -31,6 +31,13 @@ public class GrupoVinculoEntity {
 	@Column(name = "ID_TIME", nullable = false)
 	private Integer idTime;
 
+	@Column(name = "ID_CAMPEONATO_GRUPO", nullable = false)
+	private Integer idCampeonatoGrupo;
+
+	@OneToOne
+	@JoinColumn(name = "ID_CAMPEONATO_GRUPO", referencedColumnName = "ID_CAMPEONATO", insertable = false, updatable = false, nullable = false)
+	private CampeonatoEntity campeonato;
+
 	@OneToOne
 	@JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO", insertable = false, updatable = false, nullable = false)
 	private GrupoEntity grupo;

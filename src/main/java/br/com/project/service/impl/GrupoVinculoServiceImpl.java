@@ -1,6 +1,7 @@
 package br.com.project.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import br.com.project.entity.GrupoVinculoEntity;
 import br.com.project.repository.GrupoVinculoRepository;
 import br.com.project.resource.GrupoVinculo;
+import br.com.project.resource.Time;
 import br.com.project.service.GrupoVinculoService;
 
 @Service
@@ -58,5 +60,21 @@ public class GrupoVinculoServiceImpl implements GrupoVinculoService {
 		grupoVinculoEntity.setIdGrupo(idGrupo);
 		grupoVinculoEntity.setIdTime(idTime);
 		return modelMapper.map(repository.saveAndFlush(grupoVinculoEntity), GrupoVinculo.class);
+	}
+
+	@Override
+	public List<Time> getTimesGrupos(Integer idCampeonato) {
+
+		GrupoVinculoEntity exemploGrupoVinculo = new GrupoVinculoEntity();
+		exemploGrupoVinculo.setIdCampeonatoGrupo(idCampeonato);
+
+		List<GrupoVinculoEntity> grupoVinculoEntity = repository.findAll(Example.of(exemploGrupoVinculo));
+
+		if (grupoVinculoEntity.isEmpty()) {
+			return new ArrayList<>();
+		}
+
+		return grupoVinculoEntity.stream().map(source -> modelMapper.map(source.getTime(), Time.class))
+				.sorted(Comparator.comparingInt(Time::getIdTime)).collect(Collectors.toList());
 	}
 }

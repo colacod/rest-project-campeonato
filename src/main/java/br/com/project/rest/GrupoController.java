@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.project.resource.Grupo;
 import br.com.project.resource.GrupoVinculo;
+import br.com.project.resource.Time;
 import br.com.project.service.GrupoService;
 import br.com.project.service.GrupoVinculoService;
 
@@ -64,6 +65,16 @@ public class GrupoController {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(grupos);
+	}
+
+	@RequestMapping(path = "/vinculo/times/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Time>> getTimesVinculoCampeonato(
+			@PathVariable(value = "idCampeonato") Integer idCampeonato) {
+		List<Time> times = grupoVinculoService.getTimesGrupos(idCampeonato);
+		if (times.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(times);
 	}
 
 	@RequestMapping(path = "/set", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
