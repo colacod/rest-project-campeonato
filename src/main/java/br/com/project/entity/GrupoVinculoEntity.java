@@ -1,7 +1,5 @@
 package br.com.project.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,12 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "TB_GRUPO_VINCULO")
-public class GrupoVinculoEntity implements Serializable {
-
-	/**
-	 * Serial.
-	 */
-	private static final long serialVersionUID = -7276263288404193705L;
+public class GrupoVinculoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,5 @@
 package br.com.project.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "TB_GRUPO")
-public class GrupoEntity implements Serializable {
-
-	/**
-	 * Serial.
-	 */
-	private static final long serialVersionUID = -3066553591680759405L;
+public class GrupoEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
