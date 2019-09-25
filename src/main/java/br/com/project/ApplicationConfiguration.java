@@ -74,9 +74,9 @@ public class ApplicationConfiguration {
 	}
 
 	private ApiInfo metaData() {
-		return new ApiInfoBuilder().title("Spring Boot REST API")
-				.description("\"Spring Boot REST API for Online Store\"").version("1.0.0")
-				.license("Apache License Version 2.0").licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
+		return new ApiInfoBuilder().title("Spring Boot REST API").description("\"Spring Boot REST API\"")
+				.version("1.0.0").license("Apache License Version 2.0")
+				.licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
 				.contact(new Contact("Daniel Colaco", "https://spring.io/projects/spring-boot", "ddemetrio0@gmail.com"))
 				.build();
 	}
