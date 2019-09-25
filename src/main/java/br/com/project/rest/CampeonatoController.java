@@ -35,7 +35,7 @@ public class CampeonatoController {
 		if (Objects.isNull(campeonato)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(campeonato);
+		return ResponseEntity.status(HttpStatus.OK).body(campeonato);
 	}
 
 	@RequestMapping(path = "/set", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -53,7 +53,7 @@ public class CampeonatoController {
 		if (Objects.isNull(campeonatos)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(campeonatos);
+		return ResponseEntity.status(HttpStatus.OK).body(campeonatos);
 	}
 
 	@RequestMapping(path = "/criar/grupo/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

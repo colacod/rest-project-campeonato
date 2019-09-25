@@ -27,6 +27,6 @@ public class PlayoffController {
 		if (playoffs.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(playoffs);
+		return ResponseEntity.status(HttpStatus.OK).body(playoffs);
 	}
 }

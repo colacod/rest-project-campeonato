@@ -31,7 +31,7 @@ public class ResultadoController {
 		if (resultados.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(resultados);
+		return ResponseEntity.status(HttpStatus.OK).body(resultados);
 	}
 
 	@RequestMapping(path = "/set", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -36,7 +36,7 @@ public class GrupoController {
 		if (Objects.isNull(grupo)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(grupo);
+		return ResponseEntity.status(HttpStatus.OK).body(grupo);
 	}
 
 	@RequestMapping(path = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,7 +45,7 @@ public class GrupoController {
 		if (grupos.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(grupos);
+		return ResponseEntity.status(HttpStatus.OK).body(grupos);
 	}
 
 	@RequestMapping(path = "/vinculo/get/{idGrupo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,7 +54,7 @@ public class GrupoController {
 		if (grupos.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(grupos);
+		return ResponseEntity.status(HttpStatus.OK).body(grupos);
 	}
 
 	@RequestMapping(path = "/vinculo/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,7 +63,7 @@ public class GrupoController {
 		if (grupos.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(grupos);
+		return ResponseEntity.status(HttpStatus.OK).body(grupos);
 	}
 
 	@RequestMapping(path = "/set", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

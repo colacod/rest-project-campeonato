@@ -1,5 +1,6 @@
 package br.com.project.rest;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -30,7 +31,16 @@ public class TimeController {
 		if (Objects.isNull(time)) {
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(time);
+		return ResponseEntity.status(HttpStatus.OK).body(time);
+	}
+
+	@RequestMapping(path = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Time>> getTimes() {
+		List<Time> time = timeService.getTimes();
+		if (Objects.isNull(time)) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(time);
 	}
 
 	@RequestMapping(path = "/set", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
