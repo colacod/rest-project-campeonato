@@ -6,7 +6,7 @@ import br.com.project.resource.Playoff;
 
 public interface PlayoffService {
 
-	List<Playoff> getPlayoff(Integer idCampeonato);
+	List<Playoff> getPlayoff(Integer idGrupo, Integer idCampeonato);
 
 	Playoff setPlayoff(Playoff playoff);
 

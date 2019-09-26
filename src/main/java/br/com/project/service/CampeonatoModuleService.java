@@ -6,8 +6,7 @@ public interface CampeonatoModuleService {
 
 	void criarPlayoffCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo);
 
-	void criarPlayoffSemisCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo);
-
-	void criarPlayoffFinalCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo);
+	void criarSequencePlayoffCampeonato(Integer idCampeonato, Integer idGrupo, Integer idProximoGrupo,
+			Integer limiteTimePorGrupo);
 
 }

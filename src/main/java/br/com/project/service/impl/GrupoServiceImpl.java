@@ -48,24 +48,6 @@ public class GrupoServiceImpl implements GrupoService {
 	}
 
 	@Override
-	public List<Grupo> buscarTodosGruposQuartas() {
-		List<GrupoEntity> grupos = repository.buscarTodosGruposQuartas();
-		return convertEntityToResourceGrupo(grupos);
-	}
-
-	@Override
-	public List<Grupo> buscarTodosGruposSemis() {
-		List<GrupoEntity> grupos = repository.buscarTodosGruposSemis();
-		return convertEntityToResourceGrupo(grupos);
-	}
-
-	@Override
-	public List<Grupo> buscarTodosGruposFinais() {
-		List<GrupoEntity> grupos = repository.buscarTodosGruposFinais();
-		return convertEntityToResourceGrupo(grupos);
-	}
-
-	@Override
 	public List<Grupo> buscarTodosPlayoff() {
 		List<GrupoEntity> grupos = repository.buscarTodosPlayoff();
 		return convertEntityToResourceGrupo(grupos);

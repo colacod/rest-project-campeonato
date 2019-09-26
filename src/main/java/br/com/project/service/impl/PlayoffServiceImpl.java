@@ -27,10 +27,11 @@ public class PlayoffServiceImpl implements PlayoffService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public List<Playoff> getPlayoff(Integer idCampeonato) {
+	public List<Playoff> getPlayoff(Integer idGrupo, Integer idCampeonato) {
 
 		PlayoffEntity examploPlayoff = new PlayoffEntity();
 		examploPlayoff.setIdCampeonatoPlayoff(idCampeonato);
+		examploPlayoff.setIdGrupo(idGrupo);
 
 		List<PlayoffEntity> playoffsEntity = repository.findAll(Example.of(examploPlayoff));
 

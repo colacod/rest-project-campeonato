@@ -21,9 +21,10 @@ public class PlayoffController {
 	@Autowired
 	private PlayoffService playoffService;
 
-	@RequestMapping(path = "/get/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Playoff>> getPlayoff(@PathVariable(value = "idCampeonato") Integer idCampeonato) {
-		List<Playoff> playoffs = playoffService.getPlayoff(idCampeonato);
+	@RequestMapping(path = "/get/{idGrupo}/campeonato/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Playoff>> getPlayoff(@PathVariable(value = "idGrupo") Integer idGrupo,
+			@PathVariable(value = "idCampeonato") Integer idCampeonato) {
+		List<Playoff> playoffs = playoffService.getPlayoff(idGrupo, idCampeonato);
 		if (playoffs.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}

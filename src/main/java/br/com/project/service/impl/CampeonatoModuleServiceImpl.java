@@ -1,6 +1,7 @@
 package br.com.project.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -80,14 +81,9 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 	}
 
 	@Override
-	public void criarPlayoffSemisCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo) {
-		criarPlayoffCampeonato(grupoComponent.buscarTodosGruposQuartas(), idCampeonato, idProximoGrupo,
-				limiteTimePorGrupo);
-	}
-
-	@Override
-	public void criarPlayoffFinalCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo) {
-		criarPlayoffCampeonato(grupoComponent.buscarTodosGruposSemis(), idCampeonato, idProximoGrupo,
+	public void criarSequencePlayoffCampeonato(Integer idCampeonato, Integer idGrupo, Integer idProximoGrupo,
+			Integer limiteTimePorGrupo) {
+		criarPlayoffCampeonato(Arrays.asList(grupoComponent.getGrupo(idGrupo)), idCampeonato, idProximoGrupo,
 				limiteTimePorGrupo);
 	}
 
