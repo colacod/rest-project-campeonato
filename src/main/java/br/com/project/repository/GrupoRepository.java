@@ -23,4 +23,7 @@ public interface GrupoRepository extends JpaRepository<GrupoEntity, Integer> {
 	@Query("SELECT g FROM GrupoEntity g WHERE g.nomeGrupo LIKE '%FINAL%'")
 	List<GrupoEntity> buscarTodosGruposFinais();
 
+	@Query("SELECT g FROM GrupoEntity g WHERE g.nomeGrupo NOT LIKE '%GRUPO%'")
+	List<GrupoEntity> buscarTodosPlayoff();
+
 }

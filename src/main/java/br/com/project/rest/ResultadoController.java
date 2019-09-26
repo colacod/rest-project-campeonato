@@ -25,9 +25,20 @@ public class ResultadoController {
 	@Autowired
 	private ResultadoService resultadoService;
 
-	@RequestMapping(path = "/get/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Resultado>> getResultados(@PathVariable(value = "idCampeonato") Integer idCampeonato) {
+	@RequestMapping(path = "/get/campeonato/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Resultado>> getResultado(@PathVariable(value = "idCampeonato") Integer idCampeonato) {
 		List<Resultado> resultados = resultadoService.getResultado(idCampeonato);
+		if (resultados.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(resultados);
+	}
+
+	@RequestMapping(path = "/get/campeonato/{idCampeonato}/grupo/{idGrupo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Resultado>> getResultadoPorGrupoCampeonato(
+			@PathVariable(value = "idCampeonato") Integer idCampeonato,
+			@PathVariable(value = "idGrupo") Integer idGrupo) {
+		List<Resultado> resultados = resultadoService.getResultadoPorGrupoCampeonato(idCampeonato, idGrupo);
 		if (resultados.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}

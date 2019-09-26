@@ -32,14 +32,7 @@ public class ResultadoServiceImpl implements ResultadoService {
 		ResultadoEntity exemploResultado = new ResultadoEntity();
 		exemploResultado.setIdCampeonatoResultado(idCampeonato);
 
-		List<ResultadoEntity> resultadosEntity = repository.findAll(Example.of(exemploResultado));
-
-		if (resultadosEntity.isEmpty()) {
-			return new ArrayList<>();
-		}
-
-		return resultadosEntity.stream().map(source -> modelMapper.map(source, Resultado.class))
-				.collect(Collectors.toList());
+		return getResultadoByExampleEntity(exemploResultado);
 	}
 
 	@Override
@@ -62,6 +55,20 @@ public class ResultadoServiceImpl implements ResultadoService {
 		ResultadoEntity exemploResultado = new ResultadoEntity();
 		exemploResultado.setIdGrupo(idGrupo);
 
+		return getResultadoByExampleEntity(exemploResultado);
+	}
+
+	@Override
+	public List<Resultado> getResultadoPorGrupoCampeonato(Integer idCampeonato, Integer idGrupo) {
+
+		ResultadoEntity exemploResultado = new ResultadoEntity();
+		exemploResultado.setIdGrupo(idGrupo);
+		exemploResultado.setIdCampeonatoResultado(idCampeonato);
+
+		return getResultadoByExampleEntity(exemploResultado);
+	}
+
+	private List<Resultado> getResultadoByExampleEntity(ResultadoEntity exemploResultado) {
 		List<ResultadoEntity> resultadosEntity = repository.findAll(Example.of(exemploResultado));
 
 		if (resultadosEntity.isEmpty()) {
@@ -71,4 +78,5 @@ public class ResultadoServiceImpl implements ResultadoService {
 		return resultadosEntity.stream().map(source -> modelMapper.map(source, Resultado.class))
 				.collect(Collectors.toList());
 	}
+
 }

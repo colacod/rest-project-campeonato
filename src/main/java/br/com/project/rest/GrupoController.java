@@ -42,16 +42,26 @@ public class GrupoController {
 
 	@RequestMapping(path = "/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Grupo>> getGrupos() {
-		List<Grupo> grupos = grupoService.getGrupos();
+		List<Grupo> grupos = grupoService.buscarTodosGrupos();
 		if (grupos.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(grupos);
 	}
 
-	@RequestMapping(path = "/vinculo/get/{idGrupo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<GrupoVinculo>> getGruposVinculado(@PathVariable(value = "idGrupo") Integer idGrupo) {
-		List<GrupoVinculo> grupos = grupoVinculoService.getGrupo(idGrupo);
+	@RequestMapping(path = "/playoff/get", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Grupo>> getGruposPlayoff() {
+		List<Grupo> grupos = grupoService.buscarTodosPlayoff();
+		if (grupos.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(grupos);
+	}
+
+	@RequestMapping(path = "/vinculo/get/{idGrupo}/campeonato/{idCampeonato}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<GrupoVinculo>> getGruposVinculado(@PathVariable(value = "idGrupo") Integer idGrupo,
+			@PathVariable(value = "idCampeonato") Integer idCampeonato) {
+		List<GrupoVinculo> grupos = grupoVinculoService.getGrupo(idGrupo, idCampeonato);
 		if (grupos.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}

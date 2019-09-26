@@ -10,6 +10,8 @@ public interface ResultadoService {
 
 	Resultado setResultado(Resultado resultado);
 
-	List<Resultado> getResultadoPorGrupo(Integer grupo);
+	List<Resultado> getResultadoPorGrupo(Integer idGrupo);
+
+	List<Resultado> getResultadoPorGrupoCampeonato(Integer idCampeonato, Integer idGrupo);
 
 }

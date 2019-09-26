@@ -29,10 +29,11 @@ public class GrupoVinculoServiceImpl implements GrupoVinculoService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public List<GrupoVinculo> getGrupo(Integer idGrupo) {
+	public List<GrupoVinculo> getGrupo(Integer idGrupo, Integer idCampeonato) {
 
 		GrupoVinculoEntity exemploGrupoVinculo = new GrupoVinculoEntity();
 		exemploGrupoVinculo.setIdGrupo(idGrupo);
+		exemploGrupoVinculo.setIdCampeonatoGrupo(idCampeonato);
 
 		List<GrupoVinculoEntity> grupoVinculoEntity = repository.findAll(Example.of(exemploGrupoVinculo));
 
@@ -55,10 +56,11 @@ public class GrupoVinculoServiceImpl implements GrupoVinculoService {
 	}
 
 	@Override
-	public GrupoVinculo setGrupo(Integer idGrupo, Integer idTime) {
+	public GrupoVinculo setGrupo(Integer idGrupo, Integer idTime, Integer idCampeonato) {
 		GrupoVinculoEntity grupoVinculoEntity = new GrupoVinculoEntity();
 		grupoVinculoEntity.setIdGrupo(idGrupo);
 		grupoVinculoEntity.setIdTime(idTime);
+		grupoVinculoEntity.setIdCampeonatoGrupo(idCampeonato);
 		return modelMapper.map(repository.saveAndFlush(grupoVinculoEntity), GrupoVinculo.class);
 	}
 

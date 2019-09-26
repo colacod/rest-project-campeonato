@@ -66,6 +66,12 @@ public class GrupoServiceImpl implements GrupoService {
 	}
 
 	@Override
+	public List<Grupo> buscarTodosPlayoff() {
+		List<GrupoEntity> grupos = repository.buscarTodosPlayoff();
+		return convertEntityToResourceGrupo(grupos);
+	}
+
+	@Override
 	public Grupo setGrupo(Grupo grupo) {
 		GrupoEntity grupoEntity = new GrupoEntity();
 		grupoEntity.setNomeGrupo(grupo.getNomeGrupo());

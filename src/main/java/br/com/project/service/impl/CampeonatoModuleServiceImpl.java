@@ -11,12 +11,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.project.resource.Campeonato;
 import br.com.project.resource.Grupo;
 import br.com.project.resource.Playoff;
 import br.com.project.resource.Resultado;
 import br.com.project.resource.Time;
-import br.com.project.service.CampeonatoService;
 import br.com.project.service.CampeonatoModuleService;
+import br.com.project.service.CampeonatoService;
 import br.com.project.service.GrupoService;
 import br.com.project.service.GrupoVinculoService;
 import br.com.project.service.PlayoffService;
@@ -49,16 +50,22 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 
 		List<Time> times = timeComponent.getTimes();
 		List<Grupo> grupos = grupoComponent.buscarTodosGrupos();
-		Integer quantidadeTimesPorGrupo = times.size() / grupos.size();
+		Campeonato campeonato = campeonatoComponent.getCampeonato(idCampeonato);
+
+		List<Time> timeCampeonato = times.subList(0, campeonato.getLimiteTimes());
+
+		Integer quantidadeTimesPorGrupo = 4;
+		Integer quantidadeGrupos = campeonato.getLimiteTimes() / quantidadeTimesPorGrupo;
 
 		Integer quantidadeMaxima = quantidadeTimesPorGrupo;
 		Integer quantidadeInicial = 0;
 
-		Collections.shuffle(times);
+		Collections.shuffle(timeCampeonato);
 
-		for (Grupo grupo : grupos) {
+		for (int i = 0; i < quantidadeGrupos; i++) {
 			while (quantidadeInicial < quantidadeMaxima) {
-				grupoVinculoComponent.setGrupo(grupo.getIdGrupo(), times.get(quantidadeInicial).getIdTime());
+				grupoVinculoComponent.setGrupo(grupos.get(i).getIdGrupo(),
+						timeCampeonato.get(quantidadeInicial).getIdTime(), idCampeonato);
 				campeonatoComponent.addTotalCampeonato(idCampeonato);
 				quantidadeInicial++;
 			}

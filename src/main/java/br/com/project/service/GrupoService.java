@@ -20,4 +20,6 @@ public interface GrupoService {
 
 	List<Grupo> getGrupos();
 
+	List<Grupo> buscarTodosPlayoff();
+
 }
