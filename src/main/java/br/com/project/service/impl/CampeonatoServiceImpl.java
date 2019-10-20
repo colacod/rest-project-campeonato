@@ -60,7 +60,7 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 	public Campeonato addTotalCampeonato(Integer idCampeonato) {
 		CampeonatoEntity campeonatoEntity = getCampeonatoEntity(idCampeonato);
 		if (Objects.nonNull(campeonatoEntity)) {
-			campeonatoEntity.setTotalTimes(campeonatoEntity.getTotalTimes() + 1);
+			campeonatoEntity.setTotalTimes(campeonatoEntity.getTotalTimes() + ApplicationConstantes.INTEGER_UM);
 			return modelMapper.map(repository.saveAndFlush(campeonatoEntity), Campeonato.class);
 		}
 		return null;

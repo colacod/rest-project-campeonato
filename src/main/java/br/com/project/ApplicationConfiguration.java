@@ -40,7 +40,7 @@ public class ApplicationConfiguration {
 		config.addAllowedMethod("*");
 		source.registerCorsConfiguration("/**", config);
 		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-		bean.setOrder(0);
+		bean.setOrder(ApplicationConstantes.INTEGER_ZERO);
 		return bean;
 	}
 

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.project.ApplicationConstantes;
 import br.com.project.resource.Campeonato;
 import br.com.project.resource.Grupo;
 import br.com.project.resource.Playoff;
@@ -53,17 +54,17 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 		List<Grupo> grupos = grupoComponent.buscarTodosGrupos();
 		Campeonato campeonato = campeonatoComponent.getCampeonato(idCampeonato);
 
-		List<Time> timeCampeonato = times.subList(0, campeonato.getLimiteTimes());
+		List<Time> timeCampeonato = times.subList(ApplicationConstantes.INTEGER_ZERO, campeonato.getLimiteTimes());
 
 		Integer quantidadeTimesPorGrupo = 4;
 		Integer quantidadeGrupos = campeonato.getLimiteTimes() / quantidadeTimesPorGrupo;
 
 		Integer quantidadeMaxima = quantidadeTimesPorGrupo;
-		Integer quantidadeInicial = 0;
+		Integer quantidadeInicial = ApplicationConstantes.INTEGER_ZERO;
 
 		Collections.shuffle(timeCampeonato);
 
-		for (int i = 0; i < quantidadeGrupos; i++) {
+		for (int i = ApplicationConstantes.INTEGER_ZERO; i < quantidadeGrupos; i++) {
 			while (quantidadeInicial < quantidadeMaxima) {
 				grupoVinculoComponent.setGrupo(grupos.get(i).getIdGrupo(),
 						timeCampeonato.get(quantidadeInicial).getIdTime(), idCampeonato);
@@ -76,15 +77,13 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 	}
 
 	@Override
-	public void criarPlayoffCampeonato(Integer idCampeonato, Integer idProximoGrupo, Integer limiteTimePorGrupo) {
-		criarPlayoffCampeonato(grupoComponent.buscarTodosGrupos(), idCampeonato, idProximoGrupo, limiteTimePorGrupo);
+	public void criarPlayoffCampeonato(Integer idCampeonato, Integer idProximoGrupo) {
+		criarPlayoffCampeonato(grupoComponent.buscarTodosGrupos(), idCampeonato, idProximoGrupo);
 	}
 
 	@Override
-	public void criarSequencePlayoffCampeonato(Integer idCampeonato, Integer idGrupo, Integer idProximoGrupo,
-			Integer limiteTimePorGrupo) {
-		criarPlayoffCampeonato(Arrays.asList(grupoComponent.getGrupo(idGrupo)), idCampeonato, idProximoGrupo,
-				limiteTimePorGrupo);
+	public void criarSequencePlayoffCampeonato(Integer idCampeonato, Integer idGrupo, Integer idProximoGrupo) {
+		criarPlayoffCampeonato(Arrays.asList(grupoComponent.getGrupo(idGrupo)), idCampeonato, idProximoGrupo);
 	}
 
 	/**
@@ -96,25 +95,26 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 	 * @param idProximoGrupo, id do proximo grupo das playoff
 	 * @param limiteTimePorGrupo, limite de times que sera adicionado na playoff
 	 */
-	private void criarPlayoffCampeonato(List<Grupo> grupos, Integer idCampeonato, Integer idProximoGrupo,
-			Integer limiteTimePorGrupo) {
+	private void criarPlayoffCampeonato(List<Grupo> grupos, Integer idCampeonato, Integer idProximoGrupo) {
 
 		List<Time> times = new ArrayList<>();
 
 		for (Grupo grupo : grupos) {
 			List<Resultado> resultadosPorGrupo = resultadoComponent.getResultadoPorGrupo(grupo.getIdGrupo());
 			Map<Integer, Integer> pontosPorGrupo = somarPontosGrupos(resultadosPorGrupo);
-			times.addAll(pegarTimesComMaisPontos(pontosPorGrupo, limiteTimePorGrupo));
+			times.addAll(pegarTimesComMaisPontos(pontosPorGrupo,
+					pontosPorGrupo.size() / ApplicationConstantes.INTEGER_DOIS));
 		}
 
 		Collections.shuffle(times);
 
 		final Integer quantidadeMaxima = times.size();
 
-		List<Time> timesUm = times.subList(0, quantidadeMaxima / 2);
-		List<Time> timesDois = times.subList(quantidadeMaxima / 2, quantidadeMaxima);
+		List<Time> timesUm = times.subList(ApplicationConstantes.INTEGER_ZERO,
+				quantidadeMaxima / ApplicationConstantes.INTEGER_DOIS);
+		List<Time> timesDois = times.subList(quantidadeMaxima / ApplicationConstantes.INTEGER_DOIS, quantidadeMaxima);
 
-		for (int i = 0; i < timesUm.size(); i++) {
+		for (int i = ApplicationConstantes.INTEGER_ZERO; i < timesUm.size(); i++) {
 			Playoff playoff = new Playoff();
 			playoff.setIdCampeonatoPlayoff(idCampeonato);
 			playoff.setIdGrupo(idProximoGrupo);
@@ -142,9 +142,9 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 			Integer idTimeVencedor = resultado.getIdTimeVencedor();
 
 			if (pontosPorTime.containsKey(idTimeVencedor)) {
-				pontosPorTime.put(idTimeVencedor, pontosPorTime.get(idTimeVencedor) + 1);
+				pontosPorTime.put(idTimeVencedor, pontosPorTime.get(idTimeVencedor) + ApplicationConstantes.INTEGER_UM);
 			} else {
-				pontosPorTime.put(idTimeVencedor, 1);
+				pontosPorTime.put(idTimeVencedor, ApplicationConstantes.INTEGER_UM);
 			}
 		}
 

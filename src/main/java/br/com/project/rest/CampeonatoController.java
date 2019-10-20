@@ -62,21 +62,18 @@ public class CampeonatoController {
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@RequestMapping(path = "/criar/playoff/campeonato/{idCampeonato}/proximogrupo/{idProximoGrupo}/limite/{limite}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/criar/playoff/campeonato/{idCampeonato}/proximogrupo/{idProximoGrupo}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> criarCampeonatoPlayoff(@PathVariable(value = "idCampeonato") Integer idCampeonato,
-			@PathVariable(value = "idProximoGrupo") Integer idProximoGrupo,
-			@PathVariable(value = "limite") Integer limiteTimePorGrupo) {
-		campeonatoModuleService.criarPlayoffCampeonato(idCampeonato, idProximoGrupo, limiteTimePorGrupo);
+			@PathVariable(value = "idProximoGrupo") Integer idProximoGrupo) {
+		campeonatoModuleService.criarPlayoffCampeonato(idCampeonato, idProximoGrupo);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
-	@RequestMapping(path = "/criar/sequence/campeonato/{idCampeonato}/grupo/{idGrupo}/proximogrupo/{idProximoGrupo}/limite/{limite}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/criar/sequence/campeonato/{idCampeonato}/grupo/{idGrupo}/proximogrupo/{idProximoGrupo}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Boolean> criarCampeonatoSequence(@PathVariable(value = "idCampeonato") Integer idCampeonato,
 			@PathVariable(value = "idGrupo") Integer idGrupo,
-			@PathVariable(value = "idProximoGrupo") Integer idProximoGrupo,
-			@PathVariable(value = "limite") Integer limiteTimePorGrupo) {
-		campeonatoModuleService.criarSequencePlayoffCampeonato(idCampeonato, idGrupo, idProximoGrupo,
-				limiteTimePorGrupo);
+			@PathVariable(value = "idProximoGrupo") Integer idProximoGrupo) {
+		campeonatoModuleService.criarSequencePlayoffCampeonato(idCampeonato, idGrupo, idProximoGrupo);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 }
