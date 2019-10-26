@@ -93,7 +93,6 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 	 * @param grupos, lista do grupo atual
 	 * @param idCampeonato, id do campeonato atual
 	 * @param idProximoGrupo, id do proximo grupo das playoff
-	 * @param limiteTimePorGrupo, limite de times que sera adicionado na playoff
 	 */
 	private void criarPlayoffCampeonato(List<Grupo> grupos, Integer idCampeonato, Integer idProximoGrupo) {
 
@@ -102,8 +101,12 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 		for (Grupo grupo : grupos) {
 			List<Resultado> resultadosPorGrupo = resultadoComponent.getResultadoPorGrupo(grupo.getIdGrupo());
 			Map<Integer, Integer> pontosPorGrupo = somarPontosGrupos(resultadosPorGrupo);
-			times.addAll(pegarTimesComMaisPontos(pontosPorGrupo,
-					pontosPorGrupo.size() / ApplicationConstantes.INTEGER_DOIS));
+
+			Integer limite = grupos.size() > ApplicationConstantes.INTEGER_UM
+					? pontosPorGrupo.size() / ApplicationConstantes.INTEGER_DOIS
+					: pontosPorGrupo.size();
+
+			times.addAll(pegarTimesComMaisPontos(pontosPorGrupo, limite));
 		}
 
 		Collections.shuffle(times);
