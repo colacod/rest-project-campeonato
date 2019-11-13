@@ -54,6 +54,10 @@ public class CampeonatoModuleServiceImpl implements CampeonatoModuleService {
 		List<Grupo> grupos = grupoComponent.buscarTodosGrupos();
 		Campeonato campeonato = campeonatoComponent.getCampeonato(idCampeonato);
 
+		if (campeonato.getTotalTimes() >= campeonato.getLimiteTimes()) {
+			return;
+		}
+
 		List<Time> timeCampeonato = times.subList(ApplicationConstantes.INTEGER_ZERO, campeonato.getLimiteTimes());
 
 		Integer quantidadeTimesPorGrupo = 4;
