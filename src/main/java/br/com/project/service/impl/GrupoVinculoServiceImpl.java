@@ -1,21 +1,21 @@
 package br.com.project.service.impl;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
+import br.com.project.constantes.ApplicationConstantes;
 import br.com.project.entity.GrupoVinculoEntity;
+import br.com.project.exception.RecordAlreadyExistsException;
+import br.com.project.exception.RegisterNotFoundException;
 import br.com.project.repository.GrupoVinculoRepository;
 import br.com.project.resource.GrupoVinculo;
-import br.com.project.resource.Time;
 import br.com.project.service.GrupoVinculoService;
 
 @Service
@@ -29,54 +29,49 @@ public class GrupoVinculoServiceImpl implements GrupoVinculoService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public List<GrupoVinculo> getGrupo(Integer idGrupo, Integer idCampeonato) {
+	public Page<GrupoVinculoEntity> get(GrupoVinculo grupoVinculo, Pageable page, Link link) {
+		GrupoVinculoEntity entity = getGrupoVinculoEntityBuilder(grupoVinculo);
 
-		GrupoVinculoEntity exemploGrupoVinculo = new GrupoVinculoEntity();
-		exemploGrupoVinculo.setIdGrupo(idGrupo);
-		exemploGrupoVinculo.setIdCampeonatoGrupo(idCampeonato);
+		Page<GrupoVinculoEntity> grupoVinculos = repository.findAll(Example.of(entity), page);
 
-		List<GrupoVinculoEntity> grupoVinculoEntity = repository.findAll(Example.of(exemploGrupoVinculo));
-
-		if (grupoVinculoEntity.isEmpty()) {
-			return new ArrayList<>();
+		if (grupoVinculos.isEmpty()) {
+			throw new RegisterNotFoundException(grupoVinculo, ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION,
+					link);
 		}
 
-		return grupoVinculoEntity.stream().map(source -> modelMapper.map(source, GrupoVinculo.class))
-				.collect(Collectors.toList());
+		return grupoVinculos;
 	}
 
 	@Override
-	public List<GrupoVinculo> getGrupos() {
-		List<GrupoVinculoEntity> grupoVinculoEntity = repository.findAll();
-		if (grupoVinculoEntity.isEmpty()) {
-			return new ArrayList<>();
-		}
-		return grupoVinculoEntity.stream().map(source -> modelMapper.map(source, GrupoVinculo.class))
-				.collect(Collectors.toList());
+	public GrupoVinculo save(GrupoVinculo grupoVinculo, Link link) {
+		repository.findById(grupoVinculo.getIdGrupoVinculo()).ifPresent(entity -> {
+			throw new RecordAlreadyExistsException(grupoVinculo,
+					ApplicationConstantes.LOG_RECORD_ALREADY_EXISTS_EXCEPTION, link);
+		});
+
+		GrupoVinculoEntity entity = getGrupoVinculoEntityBuilder(grupoVinculo);
+
+		return modelMapper.map(repository.saveAndFlush(entity), GrupoVinculo.class);
 	}
 
 	@Override
-	public GrupoVinculo setGrupo(Integer idGrupo, Integer idTime, Integer idCampeonato) {
-		GrupoVinculoEntity grupoVinculoEntity = new GrupoVinculoEntity();
-		grupoVinculoEntity.setIdGrupo(idGrupo);
-		grupoVinculoEntity.setIdTime(idTime);
-		grupoVinculoEntity.setIdCampeonatoGrupo(idCampeonato);
-		return modelMapper.map(repository.saveAndFlush(grupoVinculoEntity), GrupoVinculo.class);
+	public GrupoVinculo update(GrupoVinculo grupoVinculo, Link link) {
+		return repository.findById(grupoVinculo.getIdGrupoVinculo()).map(entity -> {
+			return modelMapper.map(repository.save(getGrupoVinculoEntityBuilder(grupoVinculo)), GrupoVinculo.class);
+		}).orElseThrow(() -> new RegisterNotFoundException(grupoVinculo,
+				ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION, link));
 	}
 
 	@Override
-	public List<Time> getTimesGrupos(Integer idCampeonato) {
+	public Boolean delete(Long id, Link link) {
+		return repository.findById(id).map(entity -> {
+			repository.delete(entity);
+			return Boolean.TRUE;
+		}).orElseThrow(
+				() -> new RegisterNotFoundException(id, ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION, link));
+	}
 
-		GrupoVinculoEntity exemploGrupoVinculo = new GrupoVinculoEntity();
-		exemploGrupoVinculo.setIdCampeonatoGrupo(idCampeonato);
-
-		List<GrupoVinculoEntity> grupoVinculoEntity = repository.findAll(Example.of(exemploGrupoVinculo));
-
-		if (grupoVinculoEntity.isEmpty()) {
-			return new ArrayList<>();
-		}
-
-		return grupoVinculoEntity.stream().map(source -> modelMapper.map(source.getTime(), Time.class))
-				.sorted(Comparator.comparingInt(Time::getIdTime)).collect(Collectors.toList());
+	private GrupoVinculoEntity getGrupoVinculoEntityBuilder(GrupoVinculo grupoVinculo) {
+		return modelMapper.map(grupoVinculo, GrupoVinculoEntity.class);
 	}
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.project.entity.CampeonatoEntity;
 
 @Repository
-public interface CampeonatoRepository extends JpaRepository<CampeonatoEntity, Integer> {
+public interface CampeonatoRepository extends JpaRepository<CampeonatoEntity, Long> {
 
 }

@@ -1,17 +1,20 @@
 package br.com.project.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 
+import br.com.project.entity.ResultadoEntity;
 import br.com.project.resource.Resultado;
 
 public interface ResultadoService {
 
-	List<Resultado> getResultado(Integer idCampeonato);
+	Page<ResultadoEntity> get(Resultado resultado, Pageable page, Link link);
 
-	Resultado setResultado(Resultado resultado);
+	Resultado save(Resultado resultado, Link link);
 
-	List<Resultado> getResultadoPorGrupo(Integer idGrupo);
+	Resultado update(Resultado resultado, Link link);
 
-	List<Resultado> getResultadoPorGrupoCampeonato(Integer idCampeonato, Integer idGrupo);
+	Boolean delete(Long id, Link link);
 
 }

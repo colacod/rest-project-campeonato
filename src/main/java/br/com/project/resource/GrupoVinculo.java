@@ -1,28 +1,29 @@
 package br.com.project.resource;
 
-import java.io.Serializable;
+import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
 @ApiModel
-public class GrupoVinculo implements Serializable {
+public class GrupoVinculo {
 
-	private static final long serialVersionUID = -3423367598345731796L;
+	@NotNull
+	private Long idGrupoVinculo;
 
-	@ApiModelProperty(notes = "Identificador", example = "1", position = 1)
-	private Integer idGrupoVinculo;
+	private Campeonato tbCampeonato;
 
-	@ApiModelProperty(notes = "Grupo", position = 2)
-	private Grupo grupo;
+	private Grupo tbGrupo;
 
-	@ApiModelProperty(notes = "Time", position = 3)
-	private Time time;
+	private Time tbTime;
 
 }

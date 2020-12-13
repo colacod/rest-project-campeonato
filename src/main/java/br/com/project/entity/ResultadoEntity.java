@@ -1,69 +1,65 @@
 package br.com.project.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
-@Entity
+/**
+ * The persistent class for the tb_resultado database table.
+ * 
+ */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "TB_RESULTADO")
-public class ResultadoEntity {
+@EqualsAndHashCode
+@Entity
+@Table(name = "TB_RESULTADO", schema = "db")
+public class ResultadoEntity implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_RESULTADO", unique = true, nullable = false)
-	private Integer idResultado;
-
-	@Column(name = "INT_RESULTADO_TIME_UM", nullable = false)
-	private Integer resultadoTimeUm;
+	private Long idResultado;
 
 	@Column(name = "INT_RESULTADO_TIME_DOIS", nullable = false)
-	private Integer resultadoTimeDois;
+	private Integer intResultadoTimeDois;
 
-	@Column(name = "ID_CAMPEONATO_RESULTADO", nullable = false)
-	private Integer idCampeonatoResultado;
+	@Column(name = "INT_RESULTADO_TIME_UM", nullable = false)
+	private Integer intResultadoTimeUm;
 
-	@Column(name = "ID_TIME_UM", nullable = false)
-	private Integer idTimeUm;
+	// bi-directional many-to-one association to TbCampeonato
+	@ManyToOne
+	@JoinColumn(name = "ID_CAMPEONATO_RESULTADO", nullable = false)
+	private CampeonatoEntity tbCampeonato;
 
-	@Column(name = "ID_TIME_DOIS", nullable = false)
-	private Integer idTimeDois;
+	// bi-directional many-to-one association to TbGrupo
+	@ManyToOne
+	@JoinColumn(name = "ID_GRUPO", nullable = false)
+	private GrupoEntity tbGrupo;
 
-	@Column(name = "ID_GRUPO", nullable = false)
-	private Integer idGrupo;
+	// bi-directional many-to-one association to TbTime
+	@ManyToOne
+	@JoinColumn(name = "ID_TIME_DOIS", nullable = false)
+	private TimeEntity tbTime2;
 
-	@Column(name = "ID_TIME_VENCEDOR", nullable = false)
-	private Integer idTimeVencedor;
+	// bi-directional many-to-one association to TbTime
+	@ManyToOne
+	@JoinColumn(name = "ID_TIME_UM", nullable = false)
+	private TimeEntity tbTime1;
 
-	@OneToOne
-	@JoinColumn(name = "ID_CAMPEONATO_RESULTADO", referencedColumnName = "ID_CAMPEONATO", insertable = false, updatable = false, nullable = false)
-	private CampeonatoEntity campeonato;
-
-	@OneToOne
-	@JoinColumn(name = "ID_TIME_UM", referencedColumnName = "ID_TIME", insertable = false, updatable = false, nullable = false)
-	private TimeEntity timeUm;
-
-	@OneToOne
-	@JoinColumn(name = "ID_TIME_DOIS", referencedColumnName = "ID_TIME", insertable = false, updatable = false, nullable = false)
-	private TimeEntity timeDois;
-
-	@OneToOne
-	@JoinColumn(name = "ID_GRUPO", referencedColumnName = "ID_GRUPO", insertable = false, updatable = false, nullable = false)
-	private GrupoEntity grupo;
-
-	@OneToOne
-	@JoinColumn(name = "ID_TIME_VENCEDOR", referencedColumnName = "ID_TIME", insertable = false, updatable = false, nullable = false)
-	private TimeEntity timeVencedor;
+	// bi-directional many-to-one association to TbTime
+	@ManyToOne
+	@JoinColumn(name = "ID_TIME_VENCEDOR", nullable = false)
+	private TimeEntity tbTime3;
 
 }

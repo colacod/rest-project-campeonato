@@ -1,66 +1,34 @@
 package br.com.project.resource;
 
-import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
 @ApiModel
-public class Resultado implements Serializable {
+public class Resultado {
 
-	private static final long serialVersionUID = 3484318743293909656L;
+	private Long idResultado;
 
-	@ApiModelProperty(notes = "Identificador", example = "1", position = 1)
-	private Integer idResultado;
+	private Integer intResultadoTimeDois;
 
-	@NotNull
-	@ApiModelProperty(notes = "Placar do jogo do time um", example = "16", position = 2)
-	private Integer resultadoTimeUm;
+	private Integer intResultadoTimeUm;
 
-	@NotNull
-	@ApiModelProperty(notes = "Placar do jogo do time dois", example = "5", position = 3)
-	private Integer resultadoTimeDois;
+	private Campeonato tbCampeonato;
 
-	@NotNull
-	@ApiModelProperty(notes = "Identificador do campeonato", example = "5", position = 4)
-	private Integer idCampeonatoResultado;
+	private Grupo tbGrupo;
 
-	@NotNull
-	@ApiModelProperty(notes = "Identificador do time um", example = "5", position = 5)
-	private Integer idTimeUm;
+	private Time tbTime2;
 
-	@NotNull
-	@ApiModelProperty(notes = "Identificador do time dois", example = "5", position = 6)
-	private Integer idTimeDois;
+	private Time tbTime1;
 
-	@NotNull
-	@ApiModelProperty(notes = "Identificador do time vencedor", example = "5", position = 7)
-	private Integer idTimeVencedor;
+	private Time tbTime3;
 
-	@NotNull
-	@ApiModelProperty(notes = "Identificador do grupo", example = "5", position = 8)
-	private Integer idGrupo;
-
-	@ApiModelProperty(notes = "Campeonato", position = 9)
-	private Campeonato campeonato;
-
-	@ApiModelProperty(notes = "Time um", position = 10)
-	private Time timeUm;
-
-	@ApiModelProperty(notes = "Time dois", position = 11)
-	private Time timeDois;
-
-	@ApiModelProperty(notes = "Grupo", position = 12)
-	private Grupo grupo;
-
-	@ApiModelProperty(notes = "Time Vencedor", position = 13)
-	private Time timeVencedor;
 }

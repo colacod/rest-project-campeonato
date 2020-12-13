@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.project.entity.ResultadoEntity;
 
 @Repository
-public interface ResultadoRepository extends JpaRepository<ResultadoEntity, Integer> {
+public interface ResultadoRepository extends JpaRepository<ResultadoEntity, Long> {
 
 }

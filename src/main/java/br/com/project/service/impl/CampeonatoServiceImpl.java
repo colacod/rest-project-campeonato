@@ -1,19 +1,19 @@
 package br.com.project.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
-import br.com.project.ApplicationConstantes;
+import br.com.project.constantes.ApplicationConstantes;
 import br.com.project.entity.CampeonatoEntity;
+import br.com.project.exception.RecordAlreadyExistsException;
+import br.com.project.exception.RegisterNotFoundException;
 import br.com.project.repository.CampeonatoRepository;
 import br.com.project.resource.Campeonato;
 import br.com.project.service.CampeonatoService;
@@ -29,48 +29,49 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public Campeonato getCampeonato(Integer id) {
-		CampeonatoEntity campeonatoEntity = getCampeonatoEntity(id);
-		if (Objects.nonNull(campeonatoEntity)) {
-			return modelMapper.map(campeonatoEntity, Campeonato.class);
+	public Page<CampeonatoEntity> get(Campeonato campeonato, Pageable page, Link link) {
+		CampeonatoEntity entity = getCampeonatoEntityBuilder(campeonato);
+
+		Page<CampeonatoEntity> campeonatos = repository.findAll(Example.of(entity), page);
+
+		if (campeonatos.isEmpty()) {
+			throw new RegisterNotFoundException(campeonato, ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION,
+					link);
 		}
-		return null;
+
+		return campeonatos;
 	}
 
 	@Override
-	public List<Campeonato> getCampeonatos() {
-		List<CampeonatoEntity> campeonatosEntity = repository.findAll();
-		if (campeonatosEntity.isEmpty()) {
-			return new ArrayList<>();
-		}
-		return campeonatosEntity.stream().map(source -> modelMapper.map(source, Campeonato.class))
-				.collect(Collectors.toList());
+	public Campeonato save(Campeonato campeonato, Link link) {
+		repository.findById(campeonato.getIdCampeonato()).ifPresent(entity -> {
+			throw new RecordAlreadyExistsException(campeonato,
+					ApplicationConstantes.LOG_RECORD_ALREADY_EXISTS_EXCEPTION, link);
+		});
+
+		CampeonatoEntity entity = getCampeonatoEntityBuilder(campeonato);
+
+		return modelMapper.map(repository.saveAndFlush(entity), Campeonato.class);
 	}
 
 	@Override
-	public Campeonato saveCampeonato(Campeonato campeonato) {
-		CampeonatoEntity campeonatoEntity = new CampeonatoEntity();
-		campeonatoEntity.setLimiteTimes(campeonato.getLimiteTimes());
-		campeonatoEntity.setCampeonatoNome(campeonato.getCampeonatoNome());
-		campeonatoEntity.setTotalTimes(ApplicationConstantes.INTEGER_ZERO);
-		return modelMapper.map(repository.saveAndFlush(campeonatoEntity), Campeonato.class);
+	public Campeonato update(Campeonato campeonato, Link link) {
+		return repository.findById(campeonato.getIdCampeonato()).map(entity -> {
+			return modelMapper.map(repository.save(getCampeonatoEntityBuilder(campeonato)), Campeonato.class);
+		}).orElseThrow(() -> new RegisterNotFoundException(campeonato,
+				ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION, link));
 	}
 
 	@Override
-	public Campeonato addTotalCampeonato(Integer idCampeonato) {
-		CampeonatoEntity campeonatoEntity = getCampeonatoEntity(idCampeonato);
-		if (Objects.nonNull(campeonatoEntity)) {
-			campeonatoEntity.setTotalTimes(campeonatoEntity.getTotalTimes() + ApplicationConstantes.INTEGER_UM);
-			return modelMapper.map(repository.saveAndFlush(campeonatoEntity), Campeonato.class);
-		}
-		return null;
+	public Boolean delete(Long id, Link link) {
+		return repository.findById(id).map(entity -> {
+			repository.delete(entity);
+			return Boolean.TRUE;
+		}).orElseThrow(
+				() -> new RegisterNotFoundException(id, ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION, link));
 	}
 
-	private CampeonatoEntity getCampeonatoEntity(Integer id) {
-		Optional<CampeonatoEntity> campeonatoEntity = repository.findById(id);
-		if (campeonatoEntity.isPresent()) {
-			return campeonatoEntity.get();
-		}
-		return null;
+	private CampeonatoEntity getCampeonatoEntityBuilder(Campeonato campeonato) {
+		return modelMapper.map(campeonato, CampeonatoEntity.class);
 	}
 }

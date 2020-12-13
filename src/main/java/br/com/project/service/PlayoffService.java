@@ -1,13 +1,20 @@
 package br.com.project.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 
+import br.com.project.entity.PlayoffEntity;
 import br.com.project.resource.Playoff;
 
 public interface PlayoffService {
 
-	List<Playoff> getPlayoff(Integer idGrupo, Integer idCampeonato);
+	Page<PlayoffEntity> get(Playoff playoff, Pageable page, Link link);
 
-	Playoff setPlayoff(Playoff playoff);
+	Playoff save(Playoff playoff, Link link);
+
+	Playoff update(Playoff playoff, Link link);
+
+	Boolean delete(Long id, Link link);
 
 }

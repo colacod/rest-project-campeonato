@@ -1,15 +1,20 @@
 package br.com.project.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 
+import br.com.project.entity.TimeEntity;
 import br.com.project.resource.Time;
 
 public interface TimeService {
 
-	Time getTime(Integer id);
+	Page<TimeEntity> get(Time time, Pageable page, Link link);
 
-	Time saveTime(Time time);
+	Time save(Time time, Link link);
 
-	List<Time> getTimes();
+	Time update(Time time, Link link);
+
+	Boolean delete(Long id, Link link);
 
 }

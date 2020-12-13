@@ -1,6 +1,7 @@
 package br.com.project.component;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -9,20 +10,20 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import br.com.project.enums.JwtRequestAttribute;
-import br.com.project.resource.Time;
-import br.com.project.service.JwtService;
-import io.jsonwebtoken.JwtException;
 
+import br.com.project.enums.JwtRequestAttribute;
+import br.com.project.resource.User;
+import br.com.project.security.JwtService;
+import io.jsonwebtoken.JwtException;
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Component
 public class JwtFilterComponent implements Filter {
-
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	private static final Integer BEARER_LENGTH = "Bearer".length();
 
@@ -52,7 +53,7 @@ public class JwtFilterComponent implements Filter {
 
 		try {
 			String token = authHeaderVal.substring(BEARER_LENGTH, authHeaderVal.length());
-			Time user = jwtTokenService.getUser(token);
+			User user = jwtTokenService.getUser(token);
 			httpRequest.setAttribute(JwtRequestAttribute.USER.getCode(), user);
 			chain.doFilter(httpRequest, httpResponse);
 		} catch (JwtException e) {

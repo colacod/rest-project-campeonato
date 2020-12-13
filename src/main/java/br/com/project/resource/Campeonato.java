@@ -1,36 +1,42 @@
 package br.com.project.resource;
 
-import java.io.Serializable;
+import java.util.List;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
 @ApiModel
-public class Campeonato implements Serializable {
-
-	private static final long serialVersionUID = -3423367598345731796L;
-
-	@ApiModelProperty(notes = "Identificador", example = "1", position = 1)
-	private Integer idCampeonato;
-
-	@ApiModelProperty(notes = "Total de times inscrito", example = "1", position = 2)
-	private Integer totalTimes;
+public class Campeonato {
 
 	@NotNull
-	@ApiModelProperty(notes = "Limite de times por campeonato", example = "80", position = 3)
-	private Integer limiteTimes;
+	private Long idCampeonato;
 
-	@NotBlank
-	@ApiModelProperty(notes = "Nome do campeonato", example = "ESL PRO LEAGUE", position = 4)
-	private String campeonatoNome;
+	@NotNull
+	private Integer intLimiteTimes;
+
+	@NotNull
+	private Integer intTotalTimes;
+
+	@NotNull
+	@Size(max = 255)
+	private String nmCampeonato;
+
+	private List<GrupoVinculo> tbGrupoVinculos;
+
+	private List<Playoff> tbPlayoffs;
+
+	private List<Resultado> tbResultados;
 
 }

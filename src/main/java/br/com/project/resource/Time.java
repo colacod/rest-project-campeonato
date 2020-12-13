@@ -1,32 +1,46 @@
 package br.com.project.resource;
 
-import java.io.Serializable;
+import java.util.List;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
 @ApiModel
-public class Time implements Serializable {
+public class Time {
 
-	private static final long serialVersionUID = -5340176615737396679L;
+	@NotNull
+	private Long idTime;
 
-	@ApiModelProperty(notes = "Identificador", example = "1", position = 1)
-	private Integer idTime;
+	@NotNull
+	@Size(max = 255)
+	private String nmTimeNome;
 
-	@NotBlank
-	@ApiModelProperty(notes = "Nome do time", example = "Made'n Brazil", position = 2)
-	private String timeNome;
+	@NotNull
+	@Size(max = 5)
+	private String txtTimeAbrv;
 
-	@NotBlank
-	@ApiModelProperty(notes = "Nome do time abreviado", example = "MIBR", position = 3)
-	private String timeAbreviado;
+	private List<GrupoVinculo> tbGrupoVinculos;
+
+	private List<Playoff> tbPlayoffs1;
+
+	private List<Playoff> tbPlayoffs2;
+
+	private List<Resultado> tbResultados1;
+
+	private List<Resultado> tbResultados2;
+
+	private List<Resultado> tbResultados3;
 
 }

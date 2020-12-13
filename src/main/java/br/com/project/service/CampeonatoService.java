@@ -1,17 +1,20 @@
 package br.com.project.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 
+import br.com.project.entity.CampeonatoEntity;
 import br.com.project.resource.Campeonato;
 
 public interface CampeonatoService {
 
-	Campeonato getCampeonato(Integer id);
+	Page<CampeonatoEntity> get(Campeonato campeonato, Pageable page, Link link);
 
-	Campeonato saveCampeonato(Campeonato campeonato);
+	Campeonato save(Campeonato campeonato, Link link);
 
-	Campeonato addTotalCampeonato(Integer idCampeonato);
+	Campeonato update(Campeonato campeonato, Link link);
 
-	List<Campeonato> getCampeonatos();
+	Boolean delete(Long id, Link link);
 
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.project.entity.TimeEntity;
 
 @Repository
-public interface TimeRepository extends JpaRepository<TimeEntity, Integer> {
+public interface TimeRepository extends JpaRepository<TimeEntity, Long> {
 
 }

@@ -1,17 +1,19 @@
 package br.com.project.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
+import br.com.project.constantes.ApplicationConstantes;
 import br.com.project.entity.GrupoEntity;
+import br.com.project.exception.RecordAlreadyExistsException;
+import br.com.project.exception.RegisterNotFoundException;
 import br.com.project.repository.GrupoRepository;
 import br.com.project.resource.Grupo;
 import br.com.project.service.GrupoService;
@@ -27,43 +29,48 @@ public class GrupoServiceImpl implements GrupoService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public Grupo getGrupo(Integer id) {
-		Optional<GrupoEntity> grupo = repository.findById(id);
-		if (grupo.isPresent()) {
-			return modelMapper.map(grupo.get(), Grupo.class);
-		}
-		return null;
-	}
+	public Page<GrupoEntity> get(Grupo grupo, Pageable page, Link link) {
+		GrupoEntity entity = getGrupoEntityBuilder(grupo);
 
-	@Override
-	public List<Grupo> getGrupos() {
-		List<GrupoEntity> grupos = repository.findAll();
-		return convertEntityToResourceGrupo(grupos);
-	}
+		Page<GrupoEntity> grupos = repository.findAll(Example.of(entity), page);
 
-	@Override
-	public List<Grupo> buscarTodosGrupos() {
-		List<GrupoEntity> grupos = repository.buscarTodosGrupos();
-		return convertEntityToResourceGrupo(grupos);
-	}
-
-	@Override
-	public List<Grupo> buscarTodosPlayoff() {
-		List<GrupoEntity> grupos = repository.buscarTodosPlayoff();
-		return convertEntityToResourceGrupo(grupos);
-	}
-
-	@Override
-	public Grupo setGrupo(Grupo grupo) {
-		GrupoEntity grupoEntity = new GrupoEntity();
-		grupoEntity.setNomeGrupo(grupo.getNomeGrupo());
-		return modelMapper.map(repository.saveAndFlush(grupoEntity), Grupo.class);
-	}
-
-	private List<Grupo> convertEntityToResourceGrupo(List<GrupoEntity> grupos) {
 		if (grupos.isEmpty()) {
-			return new ArrayList<>();
+			throw new RegisterNotFoundException(grupo, ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION, link);
 		}
-		return grupos.stream().map(source -> modelMapper.map(source, Grupo.class)).collect(Collectors.toList());
+
+		return grupos;
+	}
+
+	@Override
+	public Grupo save(Grupo grupo, Link link) {
+		repository.findById(grupo.getIdGrupo()).ifPresent(entity -> {
+			throw new RecordAlreadyExistsException(grupo, ApplicationConstantes.LOG_RECORD_ALREADY_EXISTS_EXCEPTION,
+					link);
+		});
+
+		GrupoEntity entity = getGrupoEntityBuilder(grupo);
+
+		return modelMapper.map(repository.saveAndFlush(entity), Grupo.class);
+	}
+
+	@Override
+	public Grupo update(Grupo grupo, Link link) {
+		return repository.findById(grupo.getIdGrupo()).map(entity -> {
+			return modelMapper.map(repository.save(getGrupoEntityBuilder(grupo)), Grupo.class);
+		}).orElseThrow(() -> new RegisterNotFoundException(grupo,
+				ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION, link));
+	}
+
+	@Override
+	public Boolean delete(Long id, Link link) {
+		return repository.findById(id).map(entity -> {
+			repository.delete(entity);
+			return Boolean.TRUE;
+		}).orElseThrow(
+				() -> new RegisterNotFoundException(id, ApplicationConstantes.LOG_REGISTER_NOT_FOUND_EXCEPTION, link));
+	}
+
+	private GrupoEntity getGrupoEntityBuilder(Grupo grupo) {
+		return modelMapper.map(grupo, GrupoEntity.class);
 	}
 }

@@ -1,4 +1,4 @@
-package br.com.project.service.impl;
+package br.com.project.security.impl;
 
 import java.util.Base64;
 import java.util.Date;
@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.com.project.resource.Time;
-import br.com.project.service.JwtService;
+import br.com.project.resource.User;
+import br.com.project.security.JwtService;
 
 @Service
 public class JwtServiceImpl implements JwtService {
@@ -35,7 +36,7 @@ public class JwtServiceImpl implements JwtService {
 	}
 
 	@Override
-	public Time getUser(String token) {
+	public User getUser(String token) {
 		return getUser(token, this.encodedSecret);
 	}
 
@@ -43,7 +44,7 @@ public class JwtServiceImpl implements JwtService {
 		return null; // TODO
 	}
 
-	private Time getUser(String token, String encodedSecret) {
+	private User getUser(String token, String encodedSecret) {
 		return null; // TODO
 	}
 

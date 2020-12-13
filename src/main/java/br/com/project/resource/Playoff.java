@@ -1,46 +1,28 @@
 package br.com.project.resource;
 
-import java.io.Serializable;
-
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Builder
 @ApiModel
-public class Playoff implements Serializable {
+public class Playoff {
 
-	private static final long serialVersionUID = 1557589759410331907L;
+	private Long idPlayoff;
 
-	@ApiModelProperty(notes = "Identificador", example = "1", position = 1)
-	private Integer idPlayoff;
+	private Campeonato tbCampeonato;
 
-	@ApiModelProperty(notes = "Identificador do campeonato", example = "1", position = 2)
-	private Integer idCampeonatoPlayoff;
+	private Grupo tbGrupo;
 
-	@ApiModelProperty(notes = "Identificador do grupo", example = "1", position = 3)
-	private Integer idGrupo;
+	private Time tbTime2;
 
-	@ApiModelProperty(notes = "Identificador do time um", example = "1", position = 4)
-	private Integer idTimeUm;
-
-	@ApiModelProperty(notes = "Identificador do time dois", example = "1", position = 5)
-	private Integer idTimeDois;
-
-	@ApiModelProperty(notes = "Campeonato", position = 6)
-	private Campeonato campeonato;
-
-	@ApiModelProperty(notes = "Time um", position = 7)
-	private Time timeUm;
-
-	@ApiModelProperty(notes = "Time dois", position = 8)
-	private Time timeDois;
-
-	@ApiModelProperty(notes = "Grupo", position = 9)
-	private Grupo grupo;
+	private Time tbTime1;
 
 }
