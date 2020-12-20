@@ -15,8 +15,9 @@ public class SecurityConfig {
 	private JwtFilterComponent jwtFilter;
 
 	@Bean
-	public FilterRegistrationBean securityFilterChainRegistration() {
-		FilterRegistrationBean registrationBean = new FilterRegistrationBean(jwtFilter);
+	public FilterRegistrationBean<JwtFilterComponent> securityFilterChainRegistration() {
+		FilterRegistrationBean<JwtFilterComponent> registrationBean = new FilterRegistrationBean<JwtFilterComponent>(
+				jwtFilter);
 		registrationBean.addUrlPatterns(UrlFilter.getValues());
 		return registrationBean;
 	}

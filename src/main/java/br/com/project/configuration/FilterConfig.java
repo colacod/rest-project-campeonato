@@ -13,7 +13,7 @@ import br.com.project.constantes.ApplicationConstantes;
 public class FilterConfig {
 
 	@Bean
-	public FilterRegistrationBean corsFilter() {
+	public FilterRegistrationBean<CorsFilter> corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
@@ -21,7 +21,7 @@ public class FilterConfig {
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("*");
 		source.registerCorsConfiguration("/**", config);
-		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+		FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<CorsFilter>(new CorsFilter(source));
 		bean.setOrder(ApplicationConstantes.INTEGER_ZERO);
 		return bean;
 	}
